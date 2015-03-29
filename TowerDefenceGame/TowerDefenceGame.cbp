@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="TowerDefenceGame" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="bin/Debug/ECS" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Debug/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-g" />
+					<Add directory="src" />
+				</Compiler>
+			</Target>
+			<Target title="Release">
+				<Option output="bin/Release/ECS" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Release/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O2" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wall" />
+		</Compiler>
+		<Unit filename="src/game/components/component.hpp" />
+		<Unit filename="src/game/components/position.hpp" />
+		<Unit filename="src/game/components/velocity.hpp" />
+		<Unit filename="src/game/events/collision_event.hpp" />
+		<Unit filename="src/game/events/event.hpp" />
+		<Unit filename="src/game/systems/collision_resolver.cpp" />
+		<Unit filename="src/game/systems/collision_resolver.hpp" />
+		<Unit filename="src/game/systems/event_handler.hpp" />
+		<Unit filename="src/game/systems/event_handler_base.hpp" />
+		<Unit filename="src/game/systems/movement.cpp" />
+		<Unit filename="src/game/systems/movement.hpp" />
+		<Unit filename="src/game/systems/system.cpp" />
+		<Unit filename="src/game/systems/system.hpp" />
+		<Unit filename="src/game/utility/xml.hpp" />
+		<Unit filename="src/game/world/component_factory.cpp" />
+		<Unit filename="src/game/world/component_factory.hpp" />
+		<Unit filename="src/game/world/component_type_register.cpp" />
+		<Unit filename="src/game/world/component_type_register.hpp" />
+		<Unit filename="src/game/world/entity.hpp" />
+		<Unit filename="src/game/world/entity_manager.cpp" />
+		<Unit filename="src/game/world/entity_manager.hpp" />
+		<Unit filename="src/game/world/event_bus.hpp" />
+		<Unit filename="src/game/world/pool_interface.hpp" />
+		<Unit filename="src/game/world/pool_wrapper.hpp" />
+		<Unit filename="src/game/world/system_manager.cpp" />
+		<Unit filename="src/game/world/system_manager.hpp" />
+		<Unit filename="src/game/world/world.cpp" />
+		<Unit filename="src/game/world/world.hpp" />
+		<Unit filename="src/main.cpp" />
+		<Extensions>
+			<code_completion />
+			<envvars />
+			<debugger />
+			<lib_finder disable_auto="1" />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>
