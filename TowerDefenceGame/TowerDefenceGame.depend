@@ -2666,3 +2666,186 @@
 	"game/systems/event_handler.hpp"
 	"game/events/collision_event.hpp"
 
+1423514642 source:/home/rr/Code/Cpp/TowerDefence/TowerDefenceGame/src/game/systems/collision_resolver.cpp
+	"collision_resolver.hpp"
+	<iostream>
+
+1423517013 /home/rr/Code/Cpp/TowerDefence/TowerDefenceGame/src/game/systems/collision_resolver.hpp
+	"game/systems/system.hpp"
+	"game/systems/event_handler.hpp"
+	"game/events/collision_event.hpp"
+
+1430602333 /home/rr/Code/Cpp/TowerDefence/TowerDefenceGame/src/game/systems/system.hpp
+	<boost/dynamic_bitset.hpp>
+	"game/world/world.hpp"
+	"game/world/component_type_register.hpp"
+	"game/world/entity.hpp"
+
+1421854021 /home/rr/Code/Cpp/TowerDefence/TowerDefenceGame/src/game/world/entity.hpp
+
+1423516448 /home/rr/Code/Cpp/TowerDefence/TowerDefenceGame/src/game/systems/event_handler.hpp
+	"game/systems/event_handler_base.hpp"
+
+1423516433 /home/rr/Code/Cpp/TowerDefence/TowerDefenceGame/src/game/systems/event_handler_base.hpp
+
+1423393784 /home/rr/Code/Cpp/TowerDefence/TowerDefenceGame/src/game/events/collision_event.hpp
+	"game/events/event.hpp"
+	"game/world/entity.hpp"
+
+1423385718 /home/rr/Code/Cpp/TowerDefence/TowerDefenceGame/src/game/events/event.hpp
+
+1430604795 source:/home/rr/Code/Cpp/TowerDefence/TowerDefenceGame/src/game/systems/movement.cpp
+	"movement.hpp"
+	"game/world/world.hpp"
+	"game/world/entity_manager.hpp"
+	"game/components/position.hpp"
+	"game/components/velocity.hpp"
+	"game/components/bounding_box.hpp"
+	<cmath>
+	<iostream>
+
+1430512350 /home/rr/Code/Cpp/TowerDefence/TowerDefenceGame/src/game/systems/movement.hpp
+	"game/systems/system.hpp"
+	"game/systems/event_handler.hpp"
+	"game/events/move_entity_event.hpp"
+
+1421875949 /home/rr/Code/Cpp/TowerDefence/TowerDefenceGame/src/game/world/world.hpp
+
+1430605176 /home/rr/Code/Cpp/TowerDefence/TowerDefenceGame/src/game/world/entity_manager.hpp
+	<vector>
+	<memory>
+	<boost/dynamic_bitset.hpp>
+	<boost/noncopyable.hpp>
+	"game/world/world.hpp"
+	"game/world/component_type_register.hpp"
+	"game/world/component_factory.hpp"
+	"game/utility/xml.hpp"
+	"game/world/entity.hpp"
+
+1421876393 /home/rr/Code/Cpp/TowerDefence/TowerDefenceGame/src/game/world/component_type_register.hpp
+	<unordered_map>
+	<string>
+	<boost/bimap.hpp>
+	<boost/bimap/unordered_set_of.hpp>
+	<boost/noncopyable.hpp>
+
+1421876536 /home/rr/Code/Cpp/TowerDefence/TowerDefenceGame/src/game/world/component_factory.hpp
+	<string>
+	<memory>
+	<unordered_map>
+	<boost/function.hpp>
+	<boost/bind.hpp>
+	<boost/noncopyable.hpp>
+	"game/components/component.hpp"
+	"game/world/pool_wrapper.hpp"
+
+1416158406 /home/rr/Code/Cpp/TowerDefence/TowerDefenceGame/src/game/components/component.hpp
+	<iostream>
+
+1421577042 /home/rr/Code/Cpp/TowerDefence/TowerDefenceGame/src/game/world/pool_wrapper.hpp
+	"game/world/pool_interface.hpp"
+	<boost/pool/object_pool.hpp>
+	<boost/function.hpp>
+	<boost/bind.hpp>
+
+1406387630 /home/rr/Code/Cpp/TowerDefence/TowerDefenceGame/src/game/world/pool_interface.hpp
+
+1421515660 /home/rr/Code/Cpp/TowerDefence/TowerDefenceGame/src/game/utility/xml.hpp
+	<boost/property_tree/ptree.hpp>
+
+1429444038 /home/rr/Code/Cpp/TowerDefence/TowerDefenceGame/src/game/components/position.hpp
+	<string>
+	"component.hpp"
+
+1406834352 /home/rr/Code/Cpp/TowerDefence/TowerDefenceGame/src/game/components/velocity.hpp
+	<string>
+	"component.hpp"
+
+1421518791 source:/home/rr/Code/Cpp/TowerDefence/TowerDefenceGame/src/game/world/component_factory.cpp
+	"component_factory.hpp"
+
+1421872107 source:/home/rr/Code/Cpp/TowerDefence/TowerDefenceGame/src/game/world/component_type_register.cpp
+	"component_type_register.hpp"
+	"game/components/component.hpp"
+
+1430603062 source:/home/rr/Code/Cpp/TowerDefence/TowerDefenceGame/src/game/world/entity_manager.cpp
+	"game/world/entity_manager.hpp"
+
+1430508750 source:/home/rr/Code/Cpp/TowerDefence/TowerDefenceGame/src/game/world/system_manager.cpp
+	"system_manager.hpp"
+	"game/world/entity_manager.hpp"
+	<algorithm>
+
+1430601764 /home/rr/Code/Cpp/TowerDefence/TowerDefenceGame/src/game/world/system_manager.hpp
+	<map>
+	<memory>
+	<boost/noncopyable.hpp>
+	"game/systems/system.hpp"
+
+1423514618 source:/home/rr/Code/Cpp/TowerDefence/TowerDefenceGame/src/main.cpp
+	<iostream>
+	"game/world/world.hpp"
+	"game/world/event_bus.hpp"
+	"game/systems/collision_resolver.hpp"
+
+1430601849 /home/rr/Code/Cpp/TowerDefence/TowerDefenceGame/src/game/world/event_bus.hpp
+	<set>
+	<unordered_map>
+	<typeindex>
+	"game/events/event.hpp"
+	"game/systems/system.hpp"
+	"game/systems/event_handler.hpp"
+
+1430252564 source:/home/rr/Code/Cpp/TowerDefence/TowerDefenceGame/src/game/systems/system.cpp
+	"game/systems/system.hpp"
+	"game/world/world.hpp"
+	"game/world/component_type_register.hpp"
+
+1430603446 source:/home/rr/Code/Cpp/TowerDefence/TowerDefenceGame/src/game/world/world.cpp
+	"world.hpp"
+	<iostream>
+	"game/world/system_manager.hpp"
+	"game/world/entity_manager.hpp"
+	"game/world/event_bus.hpp"
+	"game/systems/collision_resolver.hpp"
+	"game/world/component_type_register.hpp"
+	"game/components/position.hpp"
+	"game/components/velocity.hpp"
+	"game/components/bounding_box.hpp"
+	"game/systems/movement.hpp"
+	"game/systems/wrap_detection.hpp"
+	"game/events/move_entity_event.hpp"
+	"game/utility/xml.hpp"
+
+1429443238 /home/rr/Code/Cpp/TowerDefence/TowerDefenceGame/src/game/components/camera_wrappable.hpp
+	<string>
+	"component.hpp"
+
+1429730174 /home/rr/Code/Cpp/TowerDefence/TowerDefenceGame/src/game/events/position_wrap_event.hpp
+	"game/events/event.hpp"
+	"game/world/entity.hpp"
+
+1430604552 source:/home/rr/Code/Cpp/TowerDefence/TowerDefenceGame/src/game/systems/wrap_detection.cpp
+	"wrap_detection.hpp"
+	"game/world/world.hpp"
+	"game/world/entity_manager.hpp"
+	"game/world/event_bus.hpp"
+	"game/components/position.hpp"
+	"game/components/velocity.hpp"
+	"game/components/bounding_box.hpp"
+	"game/events/move_entity_event.hpp"
+	<iostream>
+
+1430602513 /home/rr/Code/Cpp/TowerDefence/TowerDefenceGame/src/game/components/bounding_box.hpp
+	<string>
+	"component.hpp"
+
+1430601316 /home/rr/Code/Cpp/TowerDefence/TowerDefenceGame/src/game/systems/wrap_detection.hpp
+	"game/systems/system.hpp"
+	"game/systems/event_handler.hpp"
+	"game/events/move_entity_event.hpp"
+
+1430603721 /home/rr/Code/Cpp/TowerDefence/TowerDefenceGame/src/game/events/move_entity_event.hpp
+	"game/events/event.hpp"
+	"game/world/entity.hpp"
+

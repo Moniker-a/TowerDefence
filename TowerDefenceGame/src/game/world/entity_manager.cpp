@@ -15,6 +15,7 @@ void EntityManager::destroy_entity(Entity _entityID)
 }
 
 //Creates an entity from xml.
+//TODO: WARNING... Storing the returned Entity is NOT safe. Need to implement additional check (maybe a second number which is separate from the position, for entities). This could be used in conjunction with the position to check the entity is still value...
 Entity EntityManager::create_entity(xml _config)
 {
     Entity entityID;
@@ -38,13 +39,22 @@ Entity EntityManager::create_entity(xml _config)
         std::string componentName = iter.first;
 
         //Convert name to ComponentID, which indicates which component list to use.
-        unsigned int iComponentList = registry.get_ID(componentName);
+        unsigned int iComponentList;
+        try
+        {
+            iComponentList = registry.get_ID(componentName);
 
-        //Set the bit to true for this component, indicating that the entity is utilising this type of component.
-        entityMasks[entityID][iComponentList] = true;
+            //Set the bit to true for this component, indicating that the entity is utilising this type of component.
+            entityMasks[entityID][iComponentList] = true;
 
-        //Create the component and places it in the correct list.
-        components[iComponentList][entityID] = componentFactory.new_component(componentName);
+            //Create the component and places it in the correct list.
+            components[iComponentList][entityID] = componentFactory.new_component(componentName);
+        }
+        catch (const std::runtime_error ex)
+        {
+            std::cerr << "Extracted unknown component name (" << componentName << ") from xml file in EntityManager::create_entity. Entity created ignoring component.\n"
+                     << "Exception caught:\n" << ex.what() << "\n";
+        }
     }
 
     //Return the tag of the newly created entity.

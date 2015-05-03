@@ -1,9 +1,7 @@
 #pragma once
 
 #include <string>
-
 #include "component.hpp"
-
 
 namespace Component
 {
@@ -15,7 +13,7 @@ namespace Component
         float y;
 
       public:
-        Position() : x(0), y(0) {  }
+        Position() : x(10), y(10) {  }
         Position(float _x, float _y) : x(_x), y(_y) {  }
         static std::string get_name() { return "Position"; }
         float get_x() const { return x; }

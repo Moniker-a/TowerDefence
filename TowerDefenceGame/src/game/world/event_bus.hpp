@@ -3,41 +3,53 @@
 #include <unordered_map>
 #include <typeindex>
 #include "game/events/event.hpp"
+#include "game/systems/system.hpp"
 #include "game/systems/event_handler.hpp"
 
-class EventHandlerBase;
+//class EventHandlerBase;
+namespace System
+{
+    class BaseSystem;
+}
 
 class EventBus
 {
 private:
-    //std::list<Event> eventList; //Unneeded?
     std::unordered_map<std::type_index, std::set<EventHandlerBase*>> subscriberMap; //Maps event types to systems. More than one system can be to receive the same event type.
 public:
     template <typename EventType>
-    void addSubscriber(EventHandlerBase& _system); //Set _system to receive events of type EventType
+    void add_subscriber(System::BaseSystem* _system); //Set _system to receive events of type EventType
 
     template <typename EventType>
-    void removeSubscriber(EventHandlerBase& _system); //Set _system to no longer receives events of type EventType
+    void remove_subscriber(EventHandlerBase& _system); //Set _system to no longer receives events of type EventType
 
     template <typename EventType>
-    void sendEvent(EventType _event); //Sends an event to any system subscribing to said event type...
-    //void broadcastEvent(Event _event); //Sends an event to all subscribers. Probably unneeded...
+    void send_event(EventType _event); //Sends an event to any system subscribing to said event type...
 };
 
 //Set _system to receive events of type EventType
 template <typename EventType>
-void EventBus::addSubscriber(EventHandlerBase& _system)
+void EventBus::add_subscriber(System::BaseSystem* _system)
 {
+    //Convert _system to EventHandlerBase.
+    EventHandlerBase* subscribee = dynamic_cast<EventHandlerBase*>(_system);
+
     //Check if subscriber list for EventType exists.
     if (subscriberMap.count(typeid(EventType))) ////If it does add _system to the subscriber set.
-        subscriberMap[typeid(EventType)].insert(&_system);
+        subscriberMap[typeid(EventType)].insert(&(*subscribee));
     else //If this is the first time anything has subscribed to this EventType create the event set and add _system.
-        subscriberMap[typeid(EventType)].insert(&_system);
+        subscriberMap[typeid(EventType)].insert(&(*subscribee));
+
+    //Check if subscriber list for EventType exists.
+    //if (subscriberMap.count(typeid(EventType))) ////If it does add _system to the subscriber set.
+    //    subscriberMap[typeid(EventType)].insert(&(*_system));
+    //else //If this is the first time anything has subscribed to this EventType create the event set and add _system.
+    //    subscriberMap[typeid(EventType)].insert(&(*_system));
 }
 
 //Set _system to no longer receives events of type EventType
 template <typename EventType>
-void EventBus::removeSubscriber(EventHandlerBase& _system)
+void EventBus::remove_subscriber(EventHandlerBase& _system)
 {
     auto subscriberSet = subscriberMap.find(typeid(EventType)); //Find the correct subscriberSet for this EventType.
     if (subscriberSet != subscriberMap.end()) //If EventType has any subscribers.
@@ -50,7 +62,7 @@ void EventBus::removeSubscriber(EventHandlerBase& _system)
 
 //Sends an event to any system subscribing to said event type...
 template <typename EventType>
-void EventBus::sendEvent(EventType _event)
+void EventBus::send_event(EventType _event)
 {
     //For every subscriber in the event type's subscriber set...
     for (auto itr : subscriberMap[typeid(_event)]) //itr is an iterator for the subscriber set.

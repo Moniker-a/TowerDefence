@@ -1,23 +1,22 @@
 #pragma once
 
-// internal headers
 #include "game/systems/system.hpp"
-
-// forward declarations
-class ComponentManager;
-
+#include "game/systems/event_handler.hpp"
+#include "game/events/move_entity_event.hpp"
 
 namespace System
 {
     //Updates the position of any entities which have position and velocity.
-    class Movement : public System::BaseSystem
+    class Movement : public System::BaseSystem, public EventHandler<MoveEntityEvent>
     {
       public:
         // constructor
-        Movement();
+        Movement(EntityManager* _em, EventBus* _eb);
 
         // preforms update
-        void update(Entity _entityID, EntityManager& _em);
+        void update(Entity _entityID);//, EntityManager& _em);
+        void handle_event(const Event &_event) {};
+		void handle_event(const MoveEntityEvent &_event);
     };
 }
 
