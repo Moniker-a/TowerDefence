@@ -13,7 +13,7 @@ namespace Component
         float y;
 
       public:
-        Position() : x(10), y(10) {  }
+        Position() : x(100), y(100) {  }
         Position(float _x, float _y) : x(_x), y(_y) {  }
         static std::string get_name() { return "Position"; }
         float get_x() const { return x; }

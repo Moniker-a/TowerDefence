@@ -45,7 +45,8 @@ namespace System
 
 
         //Check entity has the required components.
-        if ((em->get_entity_mask(entity) & systemMask) == systemMask)
+        if (em->match_mask(entity, systemMask))
+            //(em->get_entity_mask(entity) & systemMask) == systemMask)
         {
             std::cout << "entity " << _event.get_entity() << "'s position will now be clipped.\n";
 

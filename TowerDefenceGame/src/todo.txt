@@ -1,3 +1,3 @@
-1) Currently EventHandler systems may use components which aren't covered in their system mask when handling an event. This should stop. Events should hold all neccessary info.
+1) Currently EventHandler systems may use components which aren't covered in their system mask when handling an event. This should stop. Events should hold all necessary info.
 
 2) Implement read-only and write access system masks. Motivation: E.g. WrapDetection should be able to read position but not modify it!

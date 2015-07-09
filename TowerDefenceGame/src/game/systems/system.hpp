@@ -21,9 +21,8 @@ namespace System
         EventBus* eb; //A pointer to the event bus that the system sends events to.
         boost::dynamic_bitset<> systemMask; //Mask specifying which Components the system uses. Bit position corresponds to the component registry ComponentID
 
-
     public:
-        BaseSystem(EntityManager* _em, EventBus* _eb) : em(_em), eb(_eb), systemMask(World::get_registry().get_size(), false) {  };
+        BaseSystem(EntityManager* _em, EventBus* _eb=nullptr) : em(_em), eb(_eb), systemMask(World::get_registry().get_size(), false) {  };
         virtual void update(Entity _entityID)=0; //Updates an entity.
         const boost::dynamic_bitset<> get_system_mask() const { return systemMask; }; //Returns the system's component mask.
         virtual ~BaseSystem() {  }; //Required.

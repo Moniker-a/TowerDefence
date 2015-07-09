@@ -33,9 +33,10 @@ class EntityManager : boost::noncopyable
     //TODO: WARNING... Storing the returned Entity is NOT safe. Need to implement additional check (maybe a second number which is separate from the position, for entities). This could be used in conjunction with the position to check the entity is still value...
     Entity create_entity(xml _config); //Creates an entity from xml. Mostly a wrapper for EntityManager.
 
-    boost::dynamic_bitset<> get_entity_mask(Entity _entityID) const { return entityMasks.at(_entityID); } //Returns the entity component mask of an entity.
+    const boost::dynamic_bitset<>* get_entity_mask(Entity _entityID) const { return &entityMasks.at(_entityID); } //Returns the entity component mask of an entity.
 
     std::size_t get_component_list_size() const { return cListSize; } //Returns number of components in each list.
+    bool match_mask(Entity _entity, boost::dynamic_bitset<>& _maskToMatch) const; //Returns true is the supplied mask is a subset of the entity's mask.
 
     template <typename T>
     void register_component(); //Registers a component type with the world.

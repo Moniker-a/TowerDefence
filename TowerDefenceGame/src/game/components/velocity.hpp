@@ -14,7 +14,7 @@ namespace Component
           float dy;
 
       public:
-        Velocity() : dx(0), dy(0) {  }
+        Velocity() : dx(10), dy(1.5) {  }
         Velocity(float _dx, float _dy) : dx(_dx), dy(_dy) {  }
         static std::string get_name() { return "Velocity"; }
         float get_dx() const { return dx; }

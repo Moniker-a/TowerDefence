@@ -46,7 +46,7 @@ std::string ComponentTypeRegister::get_label(const ComponentID _ID) const
 ComponentID ComponentTypeRegister::get_ID(const std::string _label) const
 {
     if (!exists(_label))
-        throw std::runtime_error("Given component ID does not exist\n");
+        throw std::runtime_error("Given component ID, \""+_label+"\" does not exist.\n");
     return componentRegistry.right.at(_label);
 }
 

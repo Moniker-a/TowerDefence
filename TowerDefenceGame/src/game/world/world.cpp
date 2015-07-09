@@ -6,12 +6,14 @@
 #include "game/world/entity_manager.hpp"
 #include "game/world/event_bus.hpp"
 #include "game/systems/collision_resolver.hpp"
+#include "game/systems/movement.hpp"
+#include "game/systems/wrap_detection.hpp"
+#include "game/systems/render.hpp"
 #include "game/world/component_type_register.hpp"
 #include "game/components/position.hpp"
 #include "game/components/velocity.hpp"
 #include "game/components/bounding_box.hpp"
-#include "game/systems/movement.hpp"
-#include "game/systems/wrap_detection.hpp"
+#include "game/components/renderable.hpp"
 #include "game/events/move_entity_event.hpp"
 #include "game/utility/xml.hpp"
 
@@ -48,6 +50,7 @@ namespace World
         entities.register_component<Component::Position>(); //Component which stores an entities position.
         entities.register_component<Component::Velocity>(); //Stores an entities velocity.
         entities.register_component<Component::BoundingBox>(); //Stores information on the region for which entity position is wrapped to.
+        entities.register_component<Component::Renderable>();
         entities.complete_registration(); //This signals end of registration.
                                           //We cannot register any components after complete_registration has been called because this is when
                                           //the Component lists are created (see ComponentManager).
@@ -57,22 +60,28 @@ namespace World
                                                                   //You can also optionally name a system when registering it, this allows it to be accessed directly using SystemManager::get_system(name);
         systems.register_system<System::WrapDetection>(2, "wrap detection"); //Priority of 2, because we want to check to see if a position needs to be wrapped *after* moving entities.
 
+        systems.register_system<System::Render>(3, "render");
+
         //Next we need to specify which Systems listen for which events.
         //In this case we need the Movement system to listen for PositionWrapEvent events.
         eventBus.add_subscriber<MoveEntityEvent>(systems.get_system<System::Movement>("movement"));
+        eventBus.add_subscriber<RenderEvent>(systems.get_system<System::Render>("render"));
 
         //Lets specify our entities by creating three XML files. These would usually exist already.
         xml entityConfig0;
         entityConfig0.put("Entity","");
+        entityConfig0.put("Entity.Renderable","");
         entityConfig0.put("Entity.Position",""); //We use the string name 'Position' to specify which type of component to be created.
                                                  //This string is matched to the overridden Component::get_name() function.
         xml entityConfig1;
         entityConfig1.put("Entity","");
+        entityConfig1.put("Entity.Renderable","");
         entityConfig1.put("Entity.Position","");
         entityConfig1.put("Entity.Velocity", "");
 
         xml entityConfig2;
         entityConfig2.put("Entity","");
+        entityConfig2.put("Entity.Renderable","");
         entityConfig2.put("Entity.Position","");
         entityConfig2.put("Entity.Velocity", "");
         entityConfig2.put("Entity.BoundingBox", "");
@@ -82,6 +91,7 @@ namespace World
         entities.create_entity(entityConfig1);
         entities.create_entity(entityConfig2);
 
+        /*
         //Update all the systems and entities a few times.
         for (unsigned int i=0; i<15; i++)
         {
@@ -94,5 +104,16 @@ namespace World
         entities.destroy_entity(0);
 
         std::cout << "\n\nEnd of example.";
+        */
     }
+}
+
+void World::update()
+{
+    systems.update();
+}
+
+void World::render()
+{
+    eventBus.send_event<RenderEvent>(RenderEvent());
 }

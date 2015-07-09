@@ -12,6 +12,7 @@ namespace System
 	//Handle and resolve any CollisionEvents.
 	void CollisionResolver::handle_event(const CollisionEvent &_event)
 	{
+	    //Currently not implemented. Was used to demonstrate the event system...
 		std::cout << "CollisionEvent received in ResolveCollision between entities " << _event.get_first() << " and " << _event.get_second() << ".\n";
 	}
 }

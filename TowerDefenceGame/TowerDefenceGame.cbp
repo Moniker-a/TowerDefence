@@ -14,7 +14,22 @@
 				<Compiler>
 					<Add option="-g" />
 					<Add directory="src" />
+					<Add directory="/usr/include/allegro5" />
 				</Compiler>
+				<Linker>
+					<Add library="/usr/lib/liballegro.so" />
+					<Add library="/usr/lib/liballegro_acodec.so" />
+					<Add library="/usr/lib/liballegro_audio.so" />
+					<Add library="/usr/lib/liballegro_color.so" />
+					<Add library="/usr/lib/liballegro_dialog.so" />
+					<Add library="/usr/lib/liballegro_font.so" />
+					<Add library="/usr/lib/liballegro_image.so" />
+					<Add library="/usr/lib/liballegro_main.so" />
+					<Add library="/usr/lib/liballegro_memfile.so" />
+					<Add library="/usr/lib/liballegro_physfs.so" />
+					<Add library="/usr/lib/liballegro_primitives.so" />
+					<Add library="/usr/lib/liballegro_ttf.so" />
+				</Linker>
 			</Target>
 			<Target title="Release">
 				<Option output="bin/Release/ECS" prefix_auto="1" extension_auto="1" />
@@ -35,16 +50,32 @@
 		<Unit filename="src/game/components/bounding_box.hpp" />
 		<Unit filename="src/game/components/component.hpp" />
 		<Unit filename="src/game/components/position.hpp" />
+		<Unit filename="src/game/components/renderable.hpp" />
 		<Unit filename="src/game/components/velocity.hpp" />
 		<Unit filename="src/game/events/collision_event.hpp" />
 		<Unit filename="src/game/events/event.hpp" />
 		<Unit filename="src/game/events/move_entity_event.hpp" />
+		<Unit filename="src/game/events/render_event.hpp" />
+		<Unit filename="src/game/game.cpp" />
+		<Unit filename="src/game/game.hpp" />
+		<Unit filename="src/game/resources/wrapped_resource.hpp" />
+		<Unit filename="src/game/states/game_state.hpp" />
+		<Unit filename="src/game/states/game_state_main.cpp" />
+		<Unit filename="src/game/states/game_state_main.hpp" />
+		<Unit filename="src/game/states/game_state_menu.cpp" />
+		<Unit filename="src/game/states/game_state_menu.hpp" />
+		<Unit filename="src/game/states/game_state_splash.cpp" />
+		<Unit filename="src/game/states/game_state_splash.hpp" />
+		<Unit filename="src/game/states/state_manager.cpp" />
+		<Unit filename="src/game/states/state_manager.hpp" />
 		<Unit filename="src/game/systems/collision_resolver.cpp" />
 		<Unit filename="src/game/systems/collision_resolver.hpp" />
 		<Unit filename="src/game/systems/event_handler.hpp" />
 		<Unit filename="src/game/systems/event_handler_base.hpp" />
 		<Unit filename="src/game/systems/movement.cpp" />
 		<Unit filename="src/game/systems/movement.hpp" />
+		<Unit filename="src/game/systems/render.cpp" />
+		<Unit filename="src/game/systems/render.hpp" />
 		<Unit filename="src/game/systems/system.cpp" />
 		<Unit filename="src/game/systems/system.hpp" />
 		<Unit filename="src/game/systems/wrap_detection.cpp" />
@@ -57,9 +88,11 @@
 		<Unit filename="src/game/world/entity.hpp" />
 		<Unit filename="src/game/world/entity_manager.cpp" />
 		<Unit filename="src/game/world/entity_manager.hpp" />
+		<Unit filename="src/game/world/event_bus.cpp" />
 		<Unit filename="src/game/world/event_bus.hpp" />
 		<Unit filename="src/game/world/pool_interface.hpp" />
 		<Unit filename="src/game/world/pool_wrapper.hpp" />
+		<Unit filename="src/game/world/resource_manager.hpp" />
 		<Unit filename="src/game/world/system_manager.cpp" />
 		<Unit filename="src/game/world/system_manager.hpp" />
 		<Unit filename="src/game/world/world.cpp" />

@@ -50,6 +50,6 @@ namespace System
             displacementY = -(y-bBox->y1);
 
         if (displacementX != 0 || displacementY != 0)
-            eb->send_event(MoveEntityEvent(_entityID, displacementX, displacementY)); //This system doesn't have authority to move entities, so it sends an event.
+            eb->send_event<MoveEntityEvent>(MoveEntityEvent(_entityID, displacementX, displacementY)); //This system doesn't have authority to move entities, so it sends an event.
     }
 }

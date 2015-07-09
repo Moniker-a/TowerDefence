@@ -69,3 +69,13 @@ Entity EntityManager::populate_empty_components()
 
     return cListSize++;
 }
+
+
+//Returns true is the supplied mask is a subset of the entity's mask.
+bool EntityManager::match_mask(Entity _entity, boost::dynamic_bitset<> &_maskToMatch) const
+{
+    if ((*get_entity_mask(_entity) & _maskToMatch) == _maskToMatch)
+        return true;
+    else
+        return false;
+}
