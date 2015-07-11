@@ -59,6 +59,7 @@
 		<Unit filename="src/game/game.cpp" />
 		<Unit filename="src/game/game.hpp" />
 		<Unit filename="src/game/resources/wrapped_resource.hpp" />
+		<Unit filename="src/game/resources/wrapped_xml.hpp" />
 		<Unit filename="src/game/states/game_state.hpp" />
 		<Unit filename="src/game/states/game_state_main.cpp" />
 		<Unit filename="src/game/states/game_state_main.hpp" />

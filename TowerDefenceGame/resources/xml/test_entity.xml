@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Entity>
+	<Renderable bitmap="eiffel tower" width="25" height="50"/>
+	<Position x="500" y="100"/>
+</Entity>

@@ -29,7 +29,9 @@ void GameStateSplash::update()
         alpha += 0.002;
 
         if (alpha >= 0.8)
+        {
             stateManager->switch_state(std::unique_ptr<GameState>(new GameStateMenu(stateManager, resourceManager)));
+        }
     }
 }
 

@@ -62,7 +62,11 @@ public:
     template <class ResourceType>
     const ResourceType& get_resource(const std::string _key) const //Should return const raw const pointers.
     {
-        return resourceMap.at(_key).unwrap<ResourceType>();
+        auto itr = resourceMap.find(_key);
+        if (itr != resourceMap.end())
+            return itr->second.unwrap<ResourceType>(); //Return the value, unwrapped to the correct resource type.
+        else
+            throw std::out_of_range("ResourceManager::get_resource: Resource not found with key/tag " + _key + ".\n");
     }
 
     //Remove a specified resource.

@@ -33,32 +33,19 @@ bool Game::initialise()
     al_register_event_source(pqueue, al_get_display_event_source(pdisplay));
     al_register_event_source(pqueue, al_get_timer_event_source(prenderTimer));
 
-    /*
-    //Test some stuff...
-    //WrappedBitmap bit("resources/temp_splash.jpg");
+    ///Test stuff here?
+
     //al_clear_to_color(al_map_rgb(100,100,100));
     //al_draw_bitmap(bit, 100, 100, 0);
     //al_flip_display();
     //al_rest(3);
-        resourceManager2.add_resource<WrappedBitmap, const char*>("test", "resources/temp_splash.jpg");
-    //WrappedBitmap bit = resourceManager.get_resource<WrappedBitmap>("test");
-        al_clear_to_color(al_map_rgb(100,100,100));
-    //al_draw_bitmap(bit, 100, 100, 0);
-        al_draw_bitmap(resourceManager2.get_resource<WrappedBitmap>("test"), 0, 0, 0);
-        al_flip_display();
-        al_rest(3);
 
-        //resourceManager.clear();
-    */
-
-    //resourceMap.emplace(std::piecewise_construct, std::forward_as_tuple(_tag), std::forward_as_tuple(ResourceType(constructorArgTypes...)));
-    //std::unordered_map<std::string, Resource> umap;
-    //std::pair<std::string, WrappedBitmap>(std::piecewise_construct, std::forward_as_tuple("tag"), std::forward_as_tuple("test"));
-    //WrappedBitmap("test");
-
+    //Load state transcending resources.
+    resourceManager.add_resource<WrappedBitmap, const char*>("default bitmap", "resources/default_bitmap.png");
 
     //Set the initial game state.
-    stateManager.push_state(std::unique_ptr<GameState>(new GameStateSplash(&stateManager, &resourceManager)));
+    //stateManager.push_state(std::unique_ptr<GameState>(new GameStateMain(&stateManager, &resourceManager)));
+    stateManager.push_state(std::unique_ptr<GameState>(new GameStateSplash(&stateManager, &resourceManager))); //For quick testing!
 
     return true;
 }

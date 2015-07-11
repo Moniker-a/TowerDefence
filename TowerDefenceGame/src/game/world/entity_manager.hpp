@@ -31,7 +31,7 @@ class EntityManager : boost::noncopyable
     void destroy_entity(Entity _entityID); //Removes an entity and all of it's components.
 
     //TODO: WARNING... Storing the returned Entity is NOT safe. Need to implement additional check (maybe a second number which is separate from the position, for entities). This could be used in conjunction with the position to check the entity is still value...
-    Entity create_entity(xml _config); //Creates an entity from xml. Mostly a wrapper for EntityManager.
+    Entity create_entity(Xml _config); //Creates an entity from xml. Mostly a wrapper for EntityManager.
 
     const boost::dynamic_bitset<>* get_entity_mask(Entity _entityID) const { return &entityMasks.at(_entityID); } //Returns the entity component mask of an entity.
 

@@ -1,12 +1,15 @@
 #include "render.hpp"
 #include <allegro5/allegro.h>
+#include <allegro5/allegro_image.h>
 #include "game/components/position.hpp"
 #include "game/components/renderable.hpp"
 #include "game/world/entity_manager.hpp"
+#include "game/world/resource_manager.hpp"
+#include "game/resources/wrapped_resource.hpp"
 
 namespace System
 {
-    Render::Render(EntityManager* _em, EventBus* _eb) : BaseSystem(_em, _eb)
+    Render::Render(EntityManager* _em, EventBus* _eb, ResourceManager* _resourceManager) : BaseSystem(_em, _eb), resourceManager(_resourceManager)
     {
         systemMask.set(World::get_registry().get_ID<Component::Renderable>());
         systemMask.set(World::get_registry().get_ID<Component::Position>());
@@ -28,7 +31,7 @@ namespace System
                 if (renderable->is_visible())
                 {
                     std::cout << "Render System rendering " << iEntity << "at (" << position->get_x() << ", " << position->get_y() << ")\n";
-                    al_draw_bitmap(renderable->get_image(), position->get_x(), position->get_y(), 0);
+                    al_draw_bitmap(resourceManager->get_resource<WrappedBitmap>(renderable->get_bitmap()), position->get_x(), position->get_y(), 0);
                 }
             }
         }

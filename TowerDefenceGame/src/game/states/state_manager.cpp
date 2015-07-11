@@ -28,7 +28,7 @@ void StateManager::switch_state(std::unique_ptr<GameState> _newState)
         push_state(std::move(_newState));
     else
     {
-        pop_state();
+        pop_state(); //Automatically stop()s the top() state.
         push_state(std::move(_newState));
     }
 }

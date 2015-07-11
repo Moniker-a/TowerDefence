@@ -1,4 +1,5 @@
 #include <memory>
+#include <allegro.h>
 #include <allegro_image.h>
 #include <allegro_font.h>
 
@@ -36,3 +37,4 @@ public:
 //Template parameters are non-trivial, define some easy type handles.
 typedef WrappedResource<ALLEGRO_BITMAP, decltype(&al_load_bitmap), al_load_bitmap, al_destroy_bitmap, const char*> WrappedBitmap;
 typedef WrappedResource<ALLEGRO_FONT, decltype(&al_load_font), al_load_font, al_destroy_font, const char*, int, int> WrappedFont;
+#include "wrapped_xml.hpp"

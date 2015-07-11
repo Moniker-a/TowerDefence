@@ -17,6 +17,9 @@
 #include "game/events/move_entity_event.hpp"
 #include "game/utility/xml.hpp"
 
+#include "game/world/resource_manager.hpp"
+#include "game/resources/wrapped_resource.hpp"
+
 namespace World
 {
     namespace
@@ -24,6 +27,7 @@ namespace World
         EntityManager entities; //Somewhere to store and manage Components.
         EventBus      eventBus; //Manages event passing and subscribing.
         SystemManager systems(&entities, &eventBus);  //Somewhere to store and use Systems.
+        ResourceManager* resourceManager;
     }
 
     //Get a const copy of registry.
@@ -34,8 +38,10 @@ namespace World
     }
 
     //Initialise World (currently just contains usage demonstration code).
-    void initalise()
+    void initalise(ResourceManager* _resourceManager) //Arguments here are temporary... need to sort out the conceptual rolls of World vs Game vs GameState as a priority...
     {
+        resourceManager = _resourceManager;
+
         ///////////////////////////
         //  Demonstration code:  //
         ///////////////////////////////////////////////////////////////////////////////////////////
@@ -60,15 +66,18 @@ namespace World
                                                                   //You can also optionally name a system when registering it, this allows it to be accessed directly using SystemManager::get_system(name);
         systems.register_system<System::WrapDetection>(2, "wrap detection"); //Priority of 2, because we want to check to see if a position needs to be wrapped *after* moving entities.
 
-        systems.register_system<System::Render>(3, "render");
+        systems.register_system<System::Render, ResourceManager*>(3, resourceManager, "render");
 
         //Next we need to specify which Systems listen for which events.
         //In this case we need the Movement system to listen for PositionWrapEvent events.
         eventBus.add_subscriber<MoveEntityEvent>(systems.get_system<System::Movement>("movement"));
         eventBus.add_subscriber<RenderEvent>(systems.get_system<System::Render>("render"));
 
+        entities.create_entity(resourceManager->get_resource<WrappedXML>("test entity"));
+        entities.create_entity(resourceManager->get_resource<WrappedXML>("test entity2"));
+
         //Lets specify our entities by creating three XML files. These would usually exist already.
-        xml entityConfig0;
+        /*xml entityConfig0;
         entityConfig0.put("Entity","");
         entityConfig0.put("Entity.Renderable","");
         entityConfig0.put("Entity.Position",""); //We use the string name 'Position' to specify which type of component to be created.
@@ -90,20 +99,6 @@ namespace World
         entities.create_entity(entityConfig0);
         entities.create_entity(entityConfig1);
         entities.create_entity(entityConfig2);
-
-        /*
-        //Update all the systems and entities a few times.
-        for (unsigned int i=0; i<15; i++)
-        {
-            std::cout << "\nUpdate " << i << "\n";
-            systems.update();
-        }
-
-        //Remove whichever entity is at position 0.
-        std::cout << "\n\nDestroying entity.";
-        entities.destroy_entity(0);
-
-        std::cout << "\n\nEnd of example.";
         */
     }
 }

@@ -14,6 +14,12 @@ namespace Component
     public:
         int x1, y1, x2, y2; //Made these public. Seemed stupid to use accessor methods for such a trivial thing...
 
+        BoundingBox(const Xml& _xmlDefinition) :
+            x1(_xmlDefinition.get<float>("Entity.BoundingBox.<xmlattr>.x1")),
+            y1(_xmlDefinition.get<float>("Entity.BoundingBox.<xmlattr>.y1")),
+            x2(_xmlDefinition.get<float>("Entity.BoundingBox.<xmlattr>.x2")),
+            y2(_xmlDefinition.get<float>("Entity.BoundingBox.<xmlattr>.y2"))
+            { std::cout << "constructed BoundingBox with xml constructor!" << std::endl; }
         BoundingBox(int _x1=0, int _y1=0, int _x2=500, int _y2=500) : x1(_x1), y1(_y1), x2(_x2), y2(_y2) {  }
         static std::string get_name() { return "BoundingBox"; }
 

@@ -23,8 +23,8 @@ public:
     SystemManager(EntityManager* _em, EventBus* _eb) : em(_em), eb(_eb) {  };
     void update(); //Updates all Systems in order of priority.
 
-    template <class TSystem>
-    void register_system(int _priority, const std::string _tag=""); //Registers a System to the manager and assigns it an update priority.
+    template <class TSystem, class ... OptionalConstructionArgs>
+    void register_system(int _priority, OptionalConstructionArgs... optionalConstructionArgs, const std::string _tag=""); //Registers a System to the manager and assigns it an update priority.
 
     template <class TSystem>
     TSystem* get_system(const std::string _name); //Returns a const non-owning raw pointer corresponding to a particular named system
@@ -32,8 +32,8 @@ public:
 
 //Registers a System. This associates it with a priority which determines the order with which it will be updated.
 //Systems can optionally be given a name/tag, allowing const pointer access via SystemManager::get_system(_tag).
-template <class TSystem>
-void SystemManager::register_system(int _priority, const std::string _tag)
+template <class TSystem, class ... OptionalConstructionArgs>
+void SystemManager::register_system(int _priority, OptionalConstructionArgs... optionalConstructionArgs, const std::string _tag)
 {
     //No pointers allowed.
     if (std::is_pointer<TSystem>::value)
@@ -44,7 +44,7 @@ void SystemManager::register_system(int _priority, const std::string _tag)
         throw std::runtime_error("Error: SystemManager::register_system<T>() - TSystem must be base of BaseSystem");
 
     //Register the System by creating a new System and.
-    auto addedPair = systemRegister.insert(std::pair<int, std::unique_ptr<System::BaseSystem>>(_priority,  std::unique_ptr<TSystem>(new TSystem(em, eb)))); //Note to replace with std::make_unique if we start using C++14.
+    auto addedPair = systemRegister.insert(std::pair<int, std::unique_ptr<System::BaseSystem>>(_priority,  std::unique_ptr<TSystem>(new TSystem(em, eb, optionalConstructionArgs...)))); //Note to replace with std::make_unique if we start using C++14.
 
     //If _tag isn't empty, add a name entry for the pointer.
     if (_tag != "")
