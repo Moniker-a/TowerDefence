@@ -10,6 +10,8 @@
 #include "game/resources/wrapped_resource.hpp"
 #include <allegro_image.h>
 
+#include <iostream> //temp
+
 
 //Initialises application resources which are necessary for all aspects of the game to run.
 bool Game::initialise()
@@ -27,7 +29,7 @@ bool Game::initialise()
     //Initialise Allegro resources.
     prenderTimer = al_create_timer(1.0/60);
     pqueue = al_create_event_queue();
-    pdisplay = al_create_display(1023, 575);
+    pdisplay = al_create_display(1023, 1000);
 
     //Register event sources.
     al_register_event_source(pqueue, al_get_display_event_source(pdisplay));
@@ -44,8 +46,8 @@ bool Game::initialise()
     resourceManager.add_resource<WrappedBitmap, const char*>("default bitmap", "resources/default_bitmap.png");
 
     //Set the initial game state.
-    //stateManager.push_state(std::unique_ptr<GameState>(new GameStateMain(&stateManager, &resourceManager)));
-    stateManager.push_state(std::unique_ptr<GameState>(new GameStateSplash(&stateManager, &resourceManager))); //For quick testing!
+    stateManager.push_state(std::unique_ptr<GameState>(new GameStateMain(&stateManager, &resourceManager))); //For quick testing!
+    //stateManager.push_state(std::unique_ptr<GameState>(new GameStateSplash(&stateManager, &resourceManager)));
 
     return true;
 }
@@ -56,6 +58,7 @@ void Game::start()
     running = true;
     bool render = false;
     al_start_timer(prenderTimer);
+    unsigned long counter = 0; //temp
 
     while (running)
     {
@@ -82,6 +85,8 @@ void Game::start()
         if (render == true)
         {
             render = false;
+            std::cout << "Render event occured: " << counter << "\n";
+            counter++;
 
             stateManager.get_current_state()->render();
             al_flip_display();

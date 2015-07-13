@@ -4,7 +4,7 @@
 
 namespace System
 {
-	void CollisionResolver::update(Entity _entityID, EntityManager& _em)
+	void CollisionResolver::update()
 	{
 		//Empty, not updated sequentially (or could be updated sequentially to actually detect collisions).
 	}

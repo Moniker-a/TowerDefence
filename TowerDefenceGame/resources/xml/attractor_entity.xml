@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Entity>
+	<Renderable bitmap="sun" width="25" height="50"/>
+	<Position x="500" y="500"/>
+	<Velocity dx="0.0" dy="0.0"/>
+	<Attractor strength="0.02"/>
+</Entity>

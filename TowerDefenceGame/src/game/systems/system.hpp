@@ -4,6 +4,7 @@
 #include "game/world/world.hpp"
 #include "game/world/component_type_register.hpp"
 #include "game/world/entity.hpp"
+#include "game/world/entity_manager.hpp"
 
 class EntityManager;
 class EventBus;
@@ -22,8 +23,8 @@ namespace System
         boost::dynamic_bitset<> systemMask; //Mask specifying which Components the system uses. Bit position corresponds to the component registry ComponentID
 
     public:
-        BaseSystem(EntityManager* _em, EventBus* _eb=nullptr) : em(_em), eb(_eb), systemMask(World::get_registry().get_size(), false) {  };
-        virtual void update(Entity _entityID)=0; //Updates an entity.
+        BaseSystem(EntityManager* _em, EventBus* _eb=nullptr) : em(_em), eb(_eb), systemMask(_em->num_component_types(), false) {  };
+        virtual void update()=0; //Updates an entity.
         const boost::dynamic_bitset<> get_system_mask() const { return systemMask; }; //Returns the system's component mask.
         virtual ~BaseSystem() {  }; //Required.
     };

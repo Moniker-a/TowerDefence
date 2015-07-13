@@ -21,13 +21,13 @@ class ComponentTypeRegister : boost::noncopyable
 
   public:
     ComponentTypeRegister() {  }; //Default constructor.
-    unsigned int get_size() const { return nextID; }; //Returns number of registered components
+    unsigned int size() const { return componentRegistry.size(); /*return nextID;*/ }; //Returns number of registered components
     void add(const std::string _label); //Registers Component of given name.
     std::string get_label(const ComponentID _ID) const; //Gets component name from ComponentID.
     ComponentID get_ID(const std::string _label) const; //Gets ComponentID from name.
     bool exists(const ComponentID _ID) const; //Returns true if a component with given ComponentID has been registered.
     bool exists(const std::string _label) const; //Returns true if a component with given string name has been registered.
 
-    template <class T>
-    ComponentID get_ID() const { return get_ID(T::get_name()); } //Returns the ComponentID from the component name (Components know their own name).
+    template <class ComponentType>
+    ComponentID get_ID() const { return get_ID(ComponentType::get_name()); } //Returns the ComponentID from the component name (Components know their own name).
 };

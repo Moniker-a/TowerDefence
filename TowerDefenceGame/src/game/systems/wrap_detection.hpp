@@ -9,9 +9,9 @@ namespace System
     //Updates generates wrap events if an object moves outside it's bounding box.
     class WrapDetection : public System::BaseSystem
     {
-      public:
+    public:
         WrapDetection(EntityManager* _em, EventBus* _eb);
-        void update(Entity _entityID);
+        void update();
     };
 }
 

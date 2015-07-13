@@ -28,7 +28,7 @@ void ComponentTypeRegister::add(const std::string _label)
 
     // prevents registering the same component twice
     if (exists(_label))
-        throw std::runtime_error("ComponentTypeRegister::add: Can not register the same component/system twice\n");
+        throw std::runtime_error("ComponentTypeRegister::add: Can not register the same component/system twice (" + _label + ").\n");
 
     componentRegistry.insert({nextID, _label});
     nextID++;

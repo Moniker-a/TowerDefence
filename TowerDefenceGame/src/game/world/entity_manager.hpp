@@ -33,10 +33,11 @@ class EntityManager : boost::noncopyable
     //TODO: WARNING... Storing the returned Entity is NOT safe. Need to implement additional check (maybe a second number which is separate from the position, for entities). This could be used in conjunction with the position to check the entity is still value...
     Entity create_entity(Xml _config); //Creates an entity from xml. Mostly a wrapper for EntityManager.
 
-    const boost::dynamic_bitset<>* get_entity_mask(Entity _entityID) const { return &entityMasks.at(_entityID); } //Returns the entity component mask of an entity.
+    const boost::dynamic_bitset<>& get_entity_mask(Entity _entityID) const { return entityMasks.at(_entityID); } //Returns the entity component mask of an entity.
 
-    std::size_t get_component_list_size() const { return cListSize; } //Returns number of components in each list.
-    bool match_mask(Entity _entity, boost::dynamic_bitset<>& _maskToMatch) const; //Returns true is the supplied mask is a subset of the entity's mask.
+    std::size_t component_list_size() const { return cListSize; } //Returns number of components in each list.
+    std::size_t num_component_types() const { return registry.size(); }
+    bool match_mask(const Entity _entity, const boost::dynamic_bitset<>& _maskToMatch) const; //Returns true is the supplied mask is a subset of the entity's mask.
 
     template <typename T>
     void register_component(); //Registers a component type with the world.
@@ -46,7 +47,13 @@ class EntityManager : boost::noncopyable
     Entity populate_empty_components(); //Adds nullptr's to each component list, returns index of the newly added elements (i.e. index to empty entity).
     void initialise_component(Entity _iEntity, unsigned int _iComponentList, std::string _component_name); ////Initialises a component (when an entity is created it is given nullptrs in place of initialised components).
     //void erase_components(Entity _iEntity); //Removed the components from each component_list at index _iEntity.
-    const ComponentTypeRegister& get_component_type_register() const { return registry; }
+    //const ComponentTypeRegister& get_component_type_register() const { return registry; }
+
+    template <typename ComponentType>
+    const ComponentID get_component_id() { return registry.get_ID<ComponentType>(); }
+
+    template <typename ComponentType>
+    bool contains_component(const Entity _entity) { return entityMasks.at(_entity)[get_component_id<ComponentType>()]; }
 
     template <class TComponentType>
     std::weak_ptr<TComponentType> get_component(const Entity _entity) const; //Returns a pointer to an existing component (who's type is specified by TComponentType) from the entity specified by _entity.
@@ -85,17 +92,17 @@ void EntityManager::register_component()
 {
     // checks if a pointer was passed
     if (std::is_pointer<TComponentType>::value)
-        throw std::runtime_error("Error: EntityManager::register_component<TComponentType>() - TComponentType cannot be a pointer");
+        throw std::runtime_error("Error: EntityManager::register_component<TComponentType>() - TComponentType cannot be a pointer.\n");
 
     // confirms that T is a base of Component
     if (!std::is_base_of<Component::BaseComponent,TComponentType>::value)
-        throw std::runtime_error("Error: EntityManager::register_component<TComponentType>() - TComponentType must be base of Component");
+        throw std::runtime_error("Error: EntityManager::register_component<TComponentType>() - TComponentType must be base of Component.\n");
 
     std::string componentName = TComponentType::get_name();
 
     //Check it's not a duplicate.
     if (registry.exists(componentName))
-        throw std::runtime_error("Error: EntityManager::register_component<TComponentType>() - Cannot register a component twice");
+        throw std::runtime_error("Error: EntityManager::register_component<TComponentType>() - Cannot register a component twice ("+componentName+").\n");
 
     // adds component to the registry
     registry.add(componentName);

@@ -11,7 +11,7 @@ namespace System
         ResourceManager* resourceManager;
     public:
         Render(EntityManager* _em, EventBus* _eb, ResourceManager* _resourceManager);
-        void update(Entity _entityID) {  } //Empty because rendering is entirely event driven.
+        void update() {  } //Empty because rendering is entirely event driven.
         void handle_event(const RenderEvent &_event);
     };
 }

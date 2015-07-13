@@ -11,14 +11,14 @@ namespace System
 {
     Render::Render(EntityManager* _em, EventBus* _eb, ResourceManager* _resourceManager) : BaseSystem(_em, _eb), resourceManager(_resourceManager)
     {
-        systemMask.set(World::get_registry().get_ID<Component::Renderable>());
-        systemMask.set(World::get_registry().get_ID<Component::Position>());
+        systemMask.set(_em->get_component_id<Component::Renderable>());
+        systemMask.set(_em->get_component_id<Component::Position>());
     }
 
     void Render::handle_event(const RenderEvent &_event)
     {
         //For each entity.
-        for (Entity iEntity=0; iEntity < em->get_component_list_size(); iEntity++)
+        for (Entity iEntity=0; iEntity < em->component_list_size(); iEntity++)
         {
             //If it contains all the required components.
             if (em->match_mask(iEntity, systemMask))
@@ -30,7 +30,7 @@ namespace System
                 //Draw bitmap.
                 if (renderable->is_visible())
                 {
-                    std::cout << "Render System rendering " << iEntity << "at (" << position->get_x() << ", " << position->get_y() << ")\n";
+                    //std::cout << "Render System rendering " << iEntity << "at (" << position->get_x() << ", " << position->get_y() << ")\n";
                     al_draw_bitmap(resourceManager->get_resource<WrappedBitmap>(renderable->get_bitmap()), position->get_x(), position->get_y(), 0);
                 }
             }

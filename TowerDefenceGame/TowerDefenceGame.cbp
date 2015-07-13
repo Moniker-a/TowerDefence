@@ -47,6 +47,8 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
+		<Unit filename="src/game/components/attractee.hpp" />
+		<Unit filename="src/game/components/attractor.hpp" />
 		<Unit filename="src/game/components/bounding_box.hpp" />
 		<Unit filename="src/game/components/component.hpp" />
 		<Unit filename="src/game/components/position.hpp" />
@@ -75,12 +77,16 @@
 		<Unit filename="src/game/systems/event_handler_base.hpp" />
 		<Unit filename="src/game/systems/movement.cpp" />
 		<Unit filename="src/game/systems/movement.hpp" />
+		<Unit filename="src/game/systems/navigation.cpp" />
+		<Unit filename="src/game/systems/navigation.hpp" />
 		<Unit filename="src/game/systems/render.cpp" />
 		<Unit filename="src/game/systems/render.hpp" />
 		<Unit filename="src/game/systems/system.cpp" />
 		<Unit filename="src/game/systems/system.hpp" />
 		<Unit filename="src/game/systems/wrap_detection.cpp" />
 		<Unit filename="src/game/systems/wrap_detection.hpp" />
+		<Unit filename="src/game/utility/math2d.cpp" />
+		<Unit filename="src/game/utility/math2d.hpp" />
 		<Unit filename="src/game/utility/xml.hpp" />
 		<Unit filename="src/game/world/component_factory.cpp" />
 		<Unit filename="src/game/world/component_factory.hpp" />

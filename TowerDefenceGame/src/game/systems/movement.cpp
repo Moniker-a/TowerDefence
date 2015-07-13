@@ -5,6 +5,7 @@
 #include "game/components/position.hpp"
 #include "game/components/velocity.hpp"
 #include "game/components/bounding_box.hpp"
+#include <boost/lexical_cast.hpp>
 
 #include <cmath>
 
@@ -17,24 +18,26 @@ namespace System
     //Default constructor.just sets the system component mask from the component registry.
     Movement::Movement(EntityManager* _em, EventBus* _eb) : BaseSystem(_em, _eb)
     {
-        systemMask.set(World::get_registry().get_ID<Component::Position>());
-        systemMask.set(World::get_registry().get_ID<Component::Velocity>());
+        systemMask.set(_em->get_component_id<Component::Position>());
+        systemMask.set(_em->get_component_id<Component::Velocity>());
     }
 
     //System logic here... Updates an entity.
-    void Movement::update(Entity _entityID)//, EntityManager& _em)
+    void Movement::update()
     {
-        if (auto pos = em->get_component<Component::Position>(_entityID).lock()) //Get a pointer to the position component of the entity corresponding to _entityID.
+        for (Entity currentEntity=0; currentEntity < em->component_list_size(); currentEntity++) //For each entity...
         {
-            //Example move logic... Output to console for demonstration purposes.
-            std::cout << "Updating System::Movement\n";
-            std::cout << "Old position:\t(" << pos->get_x() << ", " << pos->get_y() << ").\n";
-            pos->set_x(pos->get_x()+1);
-            pos->set_y(pos->get_y()+1);
-            std::cout << "New position:\t(" << pos->get_x() << ", " << pos->get_y() << ").\n";
+            if (em->match_mask(currentEntity, systemMask)) //If the system applies to the current entity, update it.
+            {
+
+                auto pos = em->get_component<Component::Position>(currentEntity).lock(); //Get a pointer to the position component of the entity corresponding to currentEntity.
+                const auto vel = em->get_component<Component::Velocity>(currentEntity).lock(); //Get a pointer to the position component of the entity corresponding to currentEntity.
+
+                //Move logic...
+                pos->set_x(pos->get_x()+vel->get_dx());
+                pos->set_y(pos->get_y()+vel->get_dy());
+            }
         }
-        else
-            throw std::runtime_error("Movement::update() trying to access a Position component when it has been deleted!");
     }
 
     //Handle a PositionWrapEvent

@@ -8,7 +8,7 @@ void EntityManager::destroy_entity(Entity _entityID)
         componentList[_entityID] = nullptr; //Smart pointers will release memory to pool automatically.
 
     //Set entity mask to all 0's.
-    entityMasks[_entityID] = boost::dynamic_bitset<>(registry.get_size());
+    entityMasks[_entityID] = boost::dynamic_bitset<>(registry.size());
 
     //Add entityID to the deleted list.
     deletedEntities.push_back(_entityID);
@@ -28,7 +28,7 @@ Entity EntityManager::create_entity(Xml _config)
     }
     else //No gap, so create new entries.
     {
-        entityMasks.emplace_back(registry.get_size());
+        entityMasks.emplace_back(registry.size());
         entityID = populate_empty_components();
     }
 
@@ -72,9 +72,9 @@ Entity EntityManager::populate_empty_components()
 
 
 //Returns true is the supplied mask is a subset of the entity's mask.
-bool EntityManager::match_mask(Entity _entity, boost::dynamic_bitset<> &_maskToMatch) const
+bool EntityManager::match_mask(const Entity _entity, const boost::dynamic_bitset<> &_maskToMatch) const
 {
-    if ((*get_entity_mask(_entity) & _maskToMatch) == _maskToMatch)
+    if ((get_entity_mask(_entity) & _maskToMatch) == _maskToMatch)
         return true;
     else
         return false;
