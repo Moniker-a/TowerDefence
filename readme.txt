@@ -6,4 +6,5 @@ Areas for improvement:
 
 2) Flexible attractor types. The loop calculating ddx and ddy could (should?) be handled by a function pointer, allowing different methods for calculating attraction between two objects, and could be stored as a Resource, e.g. AttractorKernal.
 
+3) Component xml constructors should substitute default values or throw exceptions if something is missing from xml.
 

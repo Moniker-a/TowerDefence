@@ -24,15 +24,12 @@ namespace System
             if (em->match_mask(iEntity, systemMask))
             {
                 //Get position and renderable components
-                auto position = em->get_component<Component::Position>(iEntity).lock();
-                auto renderable = em->get_component<Component::Renderable>(iEntity).lock();
+                const auto position = em->get_component<Component::Position>(iEntity).lock();
+                const auto renderable = em->get_component<Component::Renderable>(iEntity).lock();
 
                 //Draw bitmap.
                 if (renderable->is_visible())
-                {
-                    //std::cout << "Render System rendering " << iEntity << "at (" << position->get_x() << ", " << position->get_y() << ")\n";
-                    al_draw_bitmap(resourceManager->get_resource<WrappedBitmap>(renderable->get_bitmap()), position->get_x(), position->get_y(), 0);
-                }
+                    al_draw_rotated_bitmap(resourceManager->get_resource<WrappedBitmap>(renderable->get_bitmap()), renderable->get_width()/2.0, renderable->get_height()/2.0, position->get_x(), position->get_y(), position->get_orientation(), 0);
             }
         }
     }

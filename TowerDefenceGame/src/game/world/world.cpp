@@ -17,6 +17,7 @@
 #include "game/components/renderable.hpp"
 #include "game/components/attractor.hpp"
 #include "game/components/attractee.hpp"
+#include "game/components/boid.hpp"
 #include "game/events/move_entity_event.hpp"
 #include "game/utility/xml.hpp"
 
@@ -62,6 +63,7 @@ namespace World
         entities.register_component<Component::Renderable>();
         entities.register_component<Component::Attractor>();
         entities.register_component<Component::Attractee>();
+        entities.register_component<Component::Boid>();
 
         entities.complete_registration(); //This signals end of registration.
                                           //We cannot register any components after complete_registration has been called because this is when
@@ -83,6 +85,22 @@ namespace World
         entities.create_entity(resourceManager->get_resource<WrappedXML>("attractee entity"));
         entities.create_entity(resourceManager->get_resource<WrappedXML>("attractee entity2"));
         entities.create_entity(resourceManager->get_resource<WrappedXML>("attractee entity3"));
+        entities.create_entity(resourceManager->get_resource<WrappedXML>("boid entity1"));
+        entities.create_entity(resourceManager->get_resource<WrappedXML>("boid entity2"));
+        entities.create_entity(resourceManager->get_resource<WrappedXML>("boid entity3"));
+        entities.create_entity(resourceManager->get_resource<WrappedXML>("boid entity4"));
+        entities.create_entity(resourceManager->get_resource<WrappedXML>("boid entity5"));
+        entities.create_entity(resourceManager->get_resource<WrappedXML>("boid entity6"));
+        entities.create_entity(resourceManager->get_resource<WrappedXML>("boid entity7"));
+        entities.create_entity(resourceManager->get_resource<WrappedXML>("boid entity8"));
+        entities.create_entity(resourceManager->get_resource<WrappedXML>("boid entity9"));
+        entities.create_entity(resourceManager->get_resource<WrappedXML>("boid entity10"));
+        entities.create_entity(resourceManager->get_resource<WrappedXML>("boid entity11"));
+        entities.create_entity(resourceManager->get_resource<WrappedXML>("boid entity12"));
+        entities.create_entity(resourceManager->get_resource<WrappedXML>("boid entity13"));
+        entities.create_entity(resourceManager->get_resource<WrappedXML>("boid entity14"));
+        entities.create_entity(resourceManager->get_resource<WrappedXML>("boid entity15"));
+        entities.create_entity(resourceManager->get_resource<WrappedXML>("boid entity16"));
 
         //Lets specify our entities by creating three XML files. These would usually exist already.
         /*xml entityConfig0;

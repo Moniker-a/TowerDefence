@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Entity>
 	<Renderable bitmap="zombie" width="25" height="50"/>
-	<Position x="350" y="700"/>
+	<Position x="350" y="700" orientation="0"/>
 	<Velocity dx="0.0" dy="-1.0"/>
 	<Attractee strength="0.03"/>
 	<Attractor strength="0.003"/>

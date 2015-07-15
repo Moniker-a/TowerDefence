@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Entity>
+	<Renderable bitmap="boid" width="40" height="25"/>
+	<Position x="350" y="350" orientation="0.511592654"/>
+	<Velocity dx="0.0" dy="0.0"/>
+	<Boid attractRadius="100" attractStrength="0.02" repelRadius="20" repelStrength="0.02" reorientRadius="40" reorientStrength="0.02" maxVelocity="1"/>
+	<BoundingBox x1="0" y1="0" x2="1000" y2="1000"/>
+</Entity>

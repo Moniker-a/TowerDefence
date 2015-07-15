@@ -17,12 +17,29 @@ void GameStateMain::start()
     resourceManager->add_resource<WrappedBitmap, const char*>("eiffel tower", "resources/eiffel.png");
     resourceManager->add_resource<WrappedBitmap, const char*>("sun", "resources/sun.png");
     resourceManager->add_resource<WrappedBitmap, const char*>("zombie", "resources/zombie.png");
+    resourceManager->add_resource<WrappedBitmap, const char*>("boid", "resources/boid.png");
     //resourceManager->add_resource<WrappedXML, const char*>("test entity", "resources/xml/test_entity.xml");
     //resourceManager->add_resource<WrappedXML, const char*>("test entity2", "resources/xml/test_entity2.xml");
     resourceManager->add_resource<WrappedXML, const char*>("attractor entity", "resources/xml/attractor_entity.xml");
     resourceManager->add_resource<WrappedXML, const char*>("attractee entity", "resources/xml/attractee_entity.xml");
     resourceManager->add_resource<WrappedXML, const char*>("attractee entity2", "resources/xml/attractee_entity2.xml");
     resourceManager->add_resource<WrappedXML, const char*>("attractee entity3", "resources/xml/attractee_entity3.xml");
+    resourceManager->add_resource<WrappedXML, const char*>("boid entity1", "resources/xml/boid_entity1.xml");
+    resourceManager->add_resource<WrappedXML, const char*>("boid entity2", "resources/xml/boid_entity2.xml");
+    resourceManager->add_resource<WrappedXML, const char*>("boid entity3", "resources/xml/boid_entity3.xml");
+    resourceManager->add_resource<WrappedXML, const char*>("boid entity4", "resources/xml/boid_entity4.xml");
+    resourceManager->add_resource<WrappedXML, const char*>("boid entity5", "resources/xml/boid_entity5.xml");
+    resourceManager->add_resource<WrappedXML, const char*>("boid entity6", "resources/xml/boid_entity6.xml");
+    resourceManager->add_resource<WrappedXML, const char*>("boid entity7", "resources/xml/boid_entity7.xml");
+    resourceManager->add_resource<WrappedXML, const char*>("boid entity8", "resources/xml/boid_entity8.xml");
+    resourceManager->add_resource<WrappedXML, const char*>("boid entity9", "resources/xml/boid_entity9.xml");
+    resourceManager->add_resource<WrappedXML, const char*>("boid entity10", "resources/xml/boid_entity10.xml");
+    resourceManager->add_resource<WrappedXML, const char*>("boid entity11", "resources/xml/boid_entity11.xml");
+    resourceManager->add_resource<WrappedXML, const char*>("boid entity12", "resources/xml/boid_entity12.xml");
+    resourceManager->add_resource<WrappedXML, const char*>("boid entity13", "resources/xml/boid_entity13.xml");
+    resourceManager->add_resource<WrappedXML, const char*>("boid entity14", "resources/xml/boid_entity14.xml");
+    resourceManager->add_resource<WrappedXML, const char*>("boid entity15", "resources/xml/boid_entity15.xml");
+    resourceManager->add_resource<WrappedXML, const char*>("boid entity16", "resources/xml/boid_entity16.xml");
 
     World::initalise(resourceManager);
 }
@@ -37,6 +54,10 @@ void GameStateMain::stop()
     resourceManager->erase_resource("attractee entity");
     resourceManager->erase_resource("attractee entity2");
     resourceManager->erase_resource("attractee entity3");
+
+    resourceManager->erase_resource("boid");
+    resourceManager->erase_resource("boid entity1");
+    resourceManager->erase_resource("boid entity2");
 }
 
 void GameStateMain::update()

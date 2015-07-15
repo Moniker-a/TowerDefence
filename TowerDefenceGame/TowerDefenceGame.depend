@@ -2713,7 +2713,7 @@
 
 1436472682 /home/rr/Code/Cpp/TowerDefence/TowerDefenceGame/src/game/world/world.hpp
 
-1436807650 /home/rr/Code/Cpp/TowerDefence/TowerDefenceGame/src/game/world/entity_manager.hpp
+1436995394 /home/rr/Code/Cpp/TowerDefence/TowerDefenceGame/src/game/world/entity_manager.hpp
 	<vector>
 	<memory>
 	<boost/dynamic_bitset.hpp>
@@ -2756,7 +2756,7 @@
 1436476815 /home/rr/Code/Cpp/TowerDefence/TowerDefenceGame/src/game/utility/xml.hpp
 	<boost/property_tree/ptree.hpp>
 
-1436689185 /home/rr/Code/Cpp/TowerDefence/TowerDefenceGame/src/game/components/position.hpp
+1436992565 /home/rr/Code/Cpp/TowerDefence/TowerDefenceGame/src/game/components/position.hpp
 	"component.hpp"
 	"game/utility/xml.hpp"
 
@@ -2810,7 +2810,7 @@
 	"game/world/world.hpp"
 	"game/world/component_type_register.hpp"
 
-1436808494 source:/home/rr/Code/Cpp/TowerDefence/TowerDefenceGame/src/game/world/world.cpp
+1436995175 source:/home/rr/Code/Cpp/TowerDefence/TowerDefenceGame/src/game/world/world.cpp
 	"world.hpp"
 	<iostream>
 	"game/world/system_manager.hpp"
@@ -2828,6 +2828,7 @@
 	"game/components/renderable.hpp"
 	"game/components/attractor.hpp"
 	"game/components/attractee.hpp"
+	"game/components/boid.hpp"
 	"game/events/move_entity_event.hpp"
 	"game/utility/xml.hpp"
 	"game/world/resource_manager.hpp"
@@ -2963,7 +2964,7 @@
 	<allegro5/allegro.h>
 	<allegro5/allegro_image.h>
 
-1436808481 source:/home/rr/Code/Cpp/TowerDefence/TowerDefenceGame/src/game/states/game_state_main.cpp
+1436994870 source:/home/rr/Code/Cpp/TowerDefence/TowerDefenceGame/src/game/states/game_state_main.cpp
 	"game_state_main.hpp"
 	<allegro5/allegro.h>
 	<allegro5/allegro_primitives.h>
@@ -3000,7 +3001,7 @@
 1436016288 /home/rr/Code/Cpp/TowerDefence/TowerDefenceGame/src/game/states/game_state_menu.hpp
 	"game/states/game_state.hpp"
 
-1436807010 source:/home/rr/Code/Cpp/TowerDefence/TowerDefenceGame/src/game/systems/render.cpp
+1436990361 source:/home/rr/Code/Cpp/TowerDefence/TowerDefenceGame/src/game/systems/render.cpp
 	"render.hpp"
 	<allegro5/allegro.h>
 	<allegro5/allegro_image.h>
@@ -3066,7 +3067,7 @@
 	<iostream>
 	<typeinfo>
 
-1436808267 source:/home/rr/Code/Cpp/TowerDefence/TowerDefenceGame/src/game/systems/navigation.cpp
+1436994956 source:/home/rr/Code/Cpp/TowerDefence/TowerDefenceGame/src/game/systems/navigation.cpp
 	"navigation.hpp"
 	"game/world/world.hpp"
 	"game/world/entity_manager.hpp"
@@ -3074,10 +3075,12 @@
 	"game/components/attractor.hpp"
 	"game/components/attractee.hpp"
 	"game/components/position.hpp"
+	"game/components/boid.hpp"
+	"game/utility/math2d.hpp"
 	<boost/lexical_cast.hpp>
 	<iostream>
 
-1436806760 /home/rr/Code/Cpp/TowerDefence/TowerDefenceGame/src/game/systems/navigation.hpp
+1436985048 /home/rr/Code/Cpp/TowerDefence/TowerDefenceGame/src/game/systems/navigation.hpp
 	"game/systems/system.hpp"
 	"game/systems/event_handler.hpp"
 	"game/events/move_entity_event.hpp"
@@ -3093,6 +3096,9 @@
 1436705535 source:/home/rr/Code/Cpp/TowerDefence/TowerDefenceGame/src/game/utility/math2d.cpp
 	"math2d.hpp"
 
-1436805187 /home/rr/Code/Cpp/TowerDefence/TowerDefenceGame/src/game/utility/math2d.hpp
+1436990942 /home/rr/Code/Cpp/TowerDefence/TowerDefenceGame/src/game/utility/math2d.hpp
 	<utility>
+	<cmath>
+
+1436992255 /home/rr/Code/Cpp/TowerDefence/TowerDefenceGame/src/game/components/boid.hpp
 

@@ -80,7 +80,7 @@ std::weak_ptr<TComponentType> EntityManager::get_component(const Entity _entity)
 
     // if the bitmask for that particular entity indicates it does not have the component, return nullptr.
     if (components[component_index][_entity] == nullptr)
-        throw std::runtime_error("Error: EntityManager::get_component<T>(Entity _entity) - Attempted to retrieve uninitialised component");
+        throw std::runtime_error("Error: EntityManager::get_component<T>(Entity _entity) - Attempted to retrieve uninitialised component: "+TComponentType::get_name());
 
     // else return a pointer to the correct component
     return std::weak_ptr<TComponentType>(std::static_pointer_cast<TComponentType>(components[component_index][_entity]));

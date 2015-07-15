@@ -49,6 +49,7 @@
 		</Compiler>
 		<Unit filename="src/game/components/attractee.hpp" />
 		<Unit filename="src/game/components/attractor.hpp" />
+		<Unit filename="src/game/components/boid.hpp" />
 		<Unit filename="src/game/components/bounding_box.hpp" />
 		<Unit filename="src/game/components/component.hpp" />
 		<Unit filename="src/game/components/position.hpp" />

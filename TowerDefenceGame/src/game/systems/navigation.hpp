@@ -10,7 +10,8 @@ namespace System
     class Navigation : public System::BaseSystem//, public EventHandler<MoveEntityEvent>
     {
     private:
-        void update_by_attractors(); //Updates the velocity of entities containing the 'Attractee' component based on proximity and position of attractors.
+        void update_attractees(); //Updates the velocity of entities containing the 'Attractee' component based on proximity and position of attractors.
+        void update_boids(); //Updates the velocity of entities containing the 'Boid' component.
 
     public:
         // constructor
