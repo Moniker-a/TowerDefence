@@ -4,9 +4,10 @@
 #include <memory>
 #include <boost/dynamic_bitset.hpp>
 #include <boost/noncopyable.hpp>
-#include "game/world/world.hpp"
 #include "game/world/component_type_register.hpp"
 #include "game/world/component_factory.hpp"
+#include "game/world/resource_manager.hpp"
+#include "game/resources/wrapped_xml.hpp"
 #include "game/utility/xml.hpp"
 #include "game/world/entity.hpp"
 
@@ -15,7 +16,8 @@
 //Systems should not interact directly with the EntityManager but must do so via an EntityAccessLayer which ensures they only access components from entities they're supposed to be accessing.
 class EntityManager : boost::noncopyable
 {
-  private:
+private:
+    ResourceManager* resourceManager;
     std::size_t cListSize; //Stores the size of the component lists. Always equal to the number of entities.
 
     std::vector< std::vector< std::shared_ptr<Component::BaseComponent>>> components; //Vector of vectors of components - holds all components. Vector of component lists.
@@ -25,13 +27,24 @@ class EntityManager : boost::noncopyable
     bool initalised; //When set to true, no more components can be registered and the component lists are created.
     std::list<Entity> deletedEntities; //Contains the EntityIDs (indices) of deleted entities.
 
-  public:
-    EntityManager() : cListSize(0), initalised(false) {  } //Default constructor.
+    //Used to customise base specification of xml attributes recursively (base case - makes no changes).
+    void recursivelyUpdateAttributes(Xml& _config) { /*Empty*/ };
+    //Used to customise base specification of xml attributes recursively.
+    template <typename ATTR_PATH, typename VALUE, typename ...OptionalOverriders>
+    void recursivelyUpdateAttributes(Xml& _config, ATTR_PATH _path, VALUE _value, OptionalOverriders... optionalOverriders);
+
+public:
+    EntityManager(ResourceManager* _rm) : resourceManager(_rm), cListSize(0), initalised(false) {  } //Default constructor.
 
     void destroy_entity(Entity _entityID); //Removes an entity and all of it's components.
 
     //TODO: WARNING... Storing the returned Entity is NOT safe. Need to implement additional check (maybe a second number which is separate from the position, for entities). This could be used in conjunction with the position to check the entity is still value...
-    Entity create_entity(Xml _config); //Creates an entity from xml. Mostly a wrapper for EntityManager.
+    template <typename ...OptionalOverriders>
+    Entity create_entity(const Xml& _config, OptionalOverriders... optionalOverriders); //Creates an entity from xml. Mostly a wrapper for EntityManager.
+
+    //Overloaded create_entity just retrieves xml resource for the user.
+    template <typename ... OptionalOverriders>
+    Entity create_entity(const char* _config, OptionalOverriders... optionalOverriders);
 
     const boost::dynamic_bitset<>& get_entity_mask(Entity _entityID) const { return entityMasks.at(_entityID); } //Returns the entity component mask of an entity.
 
@@ -114,4 +127,73 @@ void EntityManager::register_component()
     components.push_back(std::vector< std::shared_ptr<Component::BaseComponent> >());
 }
 
+//Creates an entity from xml.
+//TODO: WARNING... Storing the returned Entity is NOT safe. Need to implement additional check (maybe a second number which is separate from the position, for entities). This could be used in conjunction with the position to check the entity is still value...
+template <typename ... OptionalOverriders>
+Entity EntityManager::create_entity(const Xml& _config, OptionalOverriders... optionalOverriders)
+{
+    //Check any supplied attribute overriders are an even number (since they need to correspond to a path-value pairs).
+    if (sizeof...(optionalOverriders) % 2 != 0)
+        throw std::runtime_error("EntityManager::create_entity: OptionalOverriders must be supplied as ComponentName-Tuple pairs.");
+
+    Xml newConfig(_config); //Copy the xml configuration before making any changes.
+    recursivelyUpdateAttributes(newConfig, optionalOverriders...); //recursively peels off pairs of optionalOverriders, treating the first as the attribute path and the second as the parameter to write.
+
+    Entity entityID;
+
+    //First check if there's a gap from a deleted entity.
+    if (!deletedEntities.empty())
+    {
+        entityID = deletedEntities.back(); //Find empty index to create entity in.
+        deletedEntities.pop_back(); //Remove this index from the list of empty entities.
+    }
+    else //No gap, so create new entries.
+    {
+        entityMasks.emplace_back(registry.size());
+        entityID = populate_empty_components();
+    }
+
+    //Iterate through the xml property tree and create required components.
+    for (auto iter : newConfig.get_child("Entity")) //For each component in the xml property tree.
+    {
+        //Get component name
+        std::string componentName = iter.first;
+
+        //Convert name to ComponentID, which indicates which component list to use.
+        unsigned int iComponentID;
+        try
+        {
+            iComponentID = registry.get_ID(componentName);
+
+            //Set the bit to true for this component, indicating that the entity is utilising this type of component.
+            entityMasks[entityID][iComponentID] = true;
+
+            //Create the component using the xml specification and place it in the correct list.
+            components[iComponentID][entityID] = componentFactory.new_component(componentName, newConfig);
+        }
+        catch (const std::runtime_error ex)
+        {
+            std::cerr << "Extracted unknown component name (" << componentName << ") from xml file in EntityManager::create_entity. Entity created ignoring component.\n"
+                     << "Exception caught:\n" << ex.what() << "\n";
+        }
+    }
+
+    //Return the tag of the newly created entity.
+    return entityID;
+}
+
+//Overloaded create_entity just retrieves xml resource for the user.
+template <typename ... OptionalOverriders>
+Entity EntityManager::create_entity(const char* _config, OptionalOverriders... optionalOverriders)
+{
+    return create_entity(resourceManager->get_resource<WrappedXML>(_config), optionalOverriders...);
+}
+
+//Private function used to customise base specification of xml attributes recursively.
+template <typename ATTR_PATH, typename VALUE, typename ...OptionalOverriders>
+void EntityManager::recursivelyUpdateAttributes(Xml& _config, ATTR_PATH _path, VALUE _value, OptionalOverriders... _optionalOverriders)
+{
+    _config.put(_path, _value);
+    recursivelyUpdateAttributes(_config, _optionalOverriders...);
+}
 

@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Entity>
-	<Renderable bitmap="default bitmap" width="25" height="50"/>
-	<Position x="300" y="200"/>
+	<Renderable bitmap="boid" width="25" height="40"/>
+	<Position x="100" y="550" orientation="0"/>
+	<Velocity dx="0.0" dy="0" maxVelocity="10"/>
+	<BoundingBox x1="0" y1="0" x2="1000" y2="1000"/>
+	<Attractee strength="0.1"/>
+	<Attractor strength="0.1"/>
+	<SelfPropelled acceleration="0.02"/>
+	<DebugInfo name="test1"/>
 </Entity>

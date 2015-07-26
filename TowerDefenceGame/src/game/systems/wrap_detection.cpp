@@ -1,14 +1,11 @@
 #include "wrap_detection.hpp"
 
-#include "game/world/world.hpp"
 #include "game/world/entity_manager.hpp"
 #include "game/world/event_bus.hpp"
 #include "game/components/position.hpp"
 #include "game/components/velocity.hpp"
 #include "game/components/bounding_box.hpp"
 #include "game/events/move_entity_event.hpp"
-
-#include <iostream> //Temp
 
 //Example system.
 //Updates the position of any entities which have velocity and position.
@@ -55,7 +52,7 @@ namespace System
                     displacementY = -(y-bBox->y1);
 
                 if (displacementX != 0 || displacementY != 0)
-                    eb->send_event<MoveEntityEvent>(MoveEntityEvent(currentEntity, displacementX, displacementY)); //This system doesn't have authority to move entities, so it sends an event.
+                    eb->send_event<Event::MoveEntityEvent>(Event::MoveEntityEvent(currentEntity, displacementX, displacementY)); //This system doesn't have authority to move entities, so it sends an event.
             }
         }
     }

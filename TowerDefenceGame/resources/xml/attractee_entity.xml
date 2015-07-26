@@ -2,7 +2,7 @@
 <Entity>
 	<Renderable bitmap="zombie" width="25" height="50"/>
 	<Position x="350" y="200" orientation="0"/>
-	<Velocity dx="1.0" dy="4.0"/>
+	<Velocity dx="1.0" dy="4.0" maxVelocity="-1"/>
 	<Attractee strength="0.02"/>
 	<Attractor strength="0.003"/>
 </Entity>

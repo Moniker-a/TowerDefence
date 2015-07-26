@@ -1,6 +1,5 @@
 #include "movement.hpp"
 
-#include "game/world/world.hpp"
 #include "game/world/entity_manager.hpp"
 #include "game/components/position.hpp"
 #include "game/components/velocity.hpp"
@@ -41,11 +40,10 @@ namespace System
     }
 
     //Handle a PositionWrapEvent
-    void Movement::handle_event(const MoveEntityEvent &_event)
+    void Movement::handle_event(const Event::MoveEntityEvent &_event)
     {
         //Extract the entity which the event concerns.
         Entity entity = _event.get_entity();
-
 
         //Check entity has the required components.
         if (em->match_mask(entity, systemMask))

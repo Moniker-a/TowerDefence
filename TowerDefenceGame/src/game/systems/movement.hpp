@@ -7,7 +7,7 @@
 namespace System
 {
     //Updates the position of any entities which have position and velocity.
-    class Movement : public System::BaseSystem, public EventHandler<MoveEntityEvent>
+    class Movement : public System::BaseSystem, public EventHandler<Event::MoveEntityEvent>
     {
     public:
         // constructor
@@ -15,8 +15,8 @@ namespace System
 
         // preforms update
         void update();//, EntityManager& _em);
-        void handle_event(const Event &_event) {};
-		void handle_event(const MoveEntityEvent &_event);
+        void handle_event(const Event::BaseEvent &_event) {};
+		void handle_event(const Event::MoveEntityEvent &_event);
     };
 }
 

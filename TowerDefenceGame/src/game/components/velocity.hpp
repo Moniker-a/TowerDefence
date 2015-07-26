@@ -6,20 +6,21 @@
 
 namespace Component
 {
-    // Simple component which holds velocity data
+    //Simple component which holds velocity data
     class Velocity : public BaseComponent
     {
-    private:
+    public: //Todo: remove accessor methods.
         float dx;
         float dy;
+        float maxVelocity; //Negative values indicate no maximum velocity.
 
-    public:
         Velocity(const Xml& _xmlDefinition) :
             dx(_xmlDefinition.get<float>("Entity.Velocity.<xmlattr>.dx")),
-            dy(_xmlDefinition.get<float>("Entity.Velocity.<xmlattr>.dy"))
-            { std::cout << "constructed Velocity with xml constructor!" << std::endl; }
-        Velocity() : dx(10), dy(1.5) {  }
-        Velocity(float _dx, float _dy) : dx(_dx), dy(_dy) {  }
+            dy(_xmlDefinition.get<float>("Entity.Velocity.<xmlattr>.dy")),
+            maxVelocity(_xmlDefinition.get<float>("Entity.Velocity.<xmlattr>.maxVelocity"))
+            {  }
+        Velocity() : dx(10), dy(1.5), maxVelocity(-1) {  }
+        Velocity(float _dx, float _dy, float _maxVelocity) : dx(_dx), dy(_dy), maxVelocity(_maxVelocity) {  }
         static std::string get_name() { return "Velocity"; }
         float get_dx() const { return dx; }
         float get_dy() const { return dy; }

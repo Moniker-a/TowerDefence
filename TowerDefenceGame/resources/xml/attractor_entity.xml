@@ -2,6 +2,6 @@
 <Entity>
 	<Renderable bitmap="sun" width="25" height="50"/>
 	<Position x="500" y="500" orientation="0"/>
-	<Velocity dx="0.0" dy="0.0"/>
+	<Velocity dx="0.0" dy="0.0" maxVelocity="-1"/>
 	<Attractor strength="0.02"/>
 </Entity>

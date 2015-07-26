@@ -1,7 +1,8 @@
 #pragma once
 
-class Event;
+class BaseEvent;
 
+//Provides an polymorphism for the event handling interface.
 class EventHandlerBase
 {
 private:

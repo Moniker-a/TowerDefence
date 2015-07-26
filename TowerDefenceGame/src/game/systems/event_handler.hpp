@@ -1,8 +1,9 @@
 #pragma once
 #include "game/systems/event_handler_base.hpp"
 
-class Event;
+class BaseEvent;
 
+//Templated interface for event handling with common base class.
 template <class EventType>
 class EventHandler : public EventHandlerBase
 {

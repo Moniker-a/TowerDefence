@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Entity>
-	<Renderable bitmap="eiffel tower" width="25" height="50"/>
-	<Position x="500" y="100"/>
+	<Renderable bitmap="boid" width="25" height="40"/>
+	<Position x="100" y="500" orientation="0"/>
+	<Velocity dx="1.0" dy="1.0" maxVelocity="5"/>
+	<BoundingBox x1="0" y1="0" x2="1000" y2="1000"/>
+	<Attractee strength="-0.08"/>
+	<Attractor strength="0.12"/>
+	<SelfPropelled acceleration="0.03"/>
+	<DebugInfo name="test1"/>
 </Entity>

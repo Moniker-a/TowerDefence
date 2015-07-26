@@ -2,9 +2,10 @@
 #include <unordered_map>
 #include <memory>
 #include <iostream> //temp
+#include <boost/noncopyable.hpp>
 
 //Manages game resources (stores, removes and provides access to game resources of any type).
-class ResourceManager
+class ResourceManager : boost::noncopyable
 {
 private:
     //Nested resource class provides a generic interface for storing game resources of different types by implementing type erasure.
@@ -37,14 +38,13 @@ private:
     public:
         //Constructor which initialises a resource with whichever ResourceModel is required.
         template <class ResourceType>
-        Resource(const ResourceType& _resource) : resource(new ResourceModel<ResourceType>(_resource)) {  }// something to do with this??
+        Resource(const ResourceType& _resource) : resource(new ResourceModel<ResourceType>(_resource)) {  }
 
         //Reverses type erasure to provide correctly typed const pointer to the raw resource.
         template <class ResourceType>
         const ResourceType& unwrap() const
         {
             return dynamic_cast<const ResourceModel<ResourceType>*>(resource.get())->get_resource(); //Faster type safety by manual checking against typeMap?
-            //return dynamic_cast<const ResourceModel<ResourceType>*>(resource.get())->get_resource(); //Faster type safety by manual checking against typeMap?
         }
     };
 
@@ -55,6 +55,7 @@ public:
     template <class ResourceType, class ... ConstructorArgTypes>
     void add_resource(std::string _tag, ConstructorArgTypes... constructorArgTypes)
     {
+        std::cout << _tag << std::endl;
         resourceMap.emplace(std::make_pair(_tag, Resource(ResourceType(constructorArgTypes...))));
     }
 

@@ -12,6 +12,9 @@ namespace System
     private:
         void update_attractees(); //Updates the velocity of entities containing the 'Attractee' component based on proximity and position of attractors.
         void update_boids(); //Updates the velocity of entities containing the 'Boid' component.
+        void self_propel();
+
+        void clip_to_max_velocity(); //Scales down any velocity which exceeds the maximum velocity.
 
     public:
         // constructor

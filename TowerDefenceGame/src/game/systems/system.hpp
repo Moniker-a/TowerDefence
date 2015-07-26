@@ -1,12 +1,11 @@
 #pragma once
 
 #include <boost/dynamic_bitset.hpp>
-#include "game/world/world.hpp"
+//#include "game/world/world.hpp"
 #include "game/world/component_type_register.hpp"
 #include "game/world/entity.hpp"
 #include "game/world/entity_manager.hpp"
 
-class EntityManager;
 class EventBus;
 
 namespace System

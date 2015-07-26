@@ -7,6 +7,7 @@
 
 //Forward declarations
 class ComponentManager;
+class EntityManager;
 
 //Container for Systems. Responsible for updating Systems in the correct order.
 class SystemManager : boost::noncopyable

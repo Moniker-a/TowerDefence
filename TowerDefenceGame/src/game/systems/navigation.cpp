@@ -1,12 +1,13 @@
 #include "navigation.hpp"
 
-#include "game/world/world.hpp"
 #include "game/world/entity_manager.hpp"
 #include "game/components/velocity.hpp"
 #include "game/components/attractor.hpp"
 #include "game/components/attractee.hpp"
+#include "game/components/locally_aware.hpp"
 #include "game/components/position.hpp"
 #include "game/components/boid.hpp"
+#include "game/components/self_propelled.hpp"
 #include "game/utility/math2d.hpp"
 #include <boost/lexical_cast.hpp>
 
@@ -25,9 +26,15 @@ namespace System
     //System logic here... Updates an entity.
     void Navigation::update()
     {
+        //Could be optimised by creating a list of velocity and/or position Components, then passing a reference to these to the various helper subroutines?
+
         //Call various update subroutines...
         update_attractees();
         update_boids();
+        self_propel();
+
+        //Adjusts velocity if exceeding maximum velocity.
+        clip_to_max_velocity();
     }
 
     //Updates the velocity of any entity containing the 'Attractee' component.
@@ -97,8 +104,8 @@ namespace System
     {
         //Get the Entity IDs of any entities with Boid components.
         std::list<Entity> boidEntities;
-        for (Entity currentEntity=0; currentEntity < em->component_list_size(); currentEntity++) //For each entity check to see if it's a Boid.
-            if (em->contains_component<Component::Boid>(currentEntity))
+        for (Entity currentEntity=0; currentEntity < em->component_list_size(); currentEntity++) //For each entity check to see if it's a Boid and locally away (makes no sense for a boid to not be away of its local environment).
+            if (em->contains_component<Component::Boid>(currentEntity) && em->contains_component<Component::LocallyAware>(currentEntity))
                 boidEntities.push_back(currentEntity);
 
         //For each Boid entity, adjust velocity based on proximity to each other Boid entity.
@@ -107,22 +114,30 @@ namespace System
             //Get current entity's position.
             auto curPosition = em->get_component<Component::Position>(currentEntity).lock();
             const auto curBoidComponent = em->get_component<Component::Boid>(currentEntity).lock();
-
+            const auto localAwareness = em->get_component<Component::LocallyAware>(currentEntity).lock();
             float dTheta = 0.0; //Tracks change in orientation.
-            //float ddx = 0.0; //Tracks change in x velocity.
-            //float ddy = 0.0; //Tracks change in y velocity.
-            for (Entity otherBoidEntity : boidEntities) //For every other boid entity, we might need to update currentEntity's velocity...
+
+            for (unsigned int i=0; i<localAwareness->localEntities.size(); i++) //For every boid in the current boid's local awareness, we might need to update currentEntity's velocity...
             {
+                Entity otherBoidEntity = localAwareness->localEntities[i];
+
+                if (!em->contains_component<Component::Boid>(otherBoidEntity)) //Ignore any local non-boids.
+                    continue;
+
                 if (otherBoidEntity == currentEntity) //Ignore self.
                     continue;
 
-                //Calculate distance between currentEntity and boidEntity.
+                const float distance = localAwareness->get_distances()[i];
+                const float direction = localAwareness->get_directions()[i];
                 const auto othersPosition = em->get_component<Component::Position>(otherBoidEntity).lock();
-                const float xDistance = othersPosition->get_x() - curPosition->get_x();
-                const float yDistance = othersPosition->get_y() - curPosition->get_y();
 
-                const float distance = vector_magnitude(xDistance, yDistance); //Distance between the two boids (always positive or 0).
-                const float direction = cartesian_to_polar(xDistance, yDistance).second;
+                //Calculate distance between currentEntity and boidEntity.
+                //const auto othersPosition = em->get_component<Component::Position>(otherBoidEntity).lock();
+                //const float xDistance = othersPosition->get_x() - curPosition->get_x();
+                //const float yDistance = othersPosition->get_y() - curPosition->get_y();
+
+                //const float distance = math2d::vector_magnitude(xDistance, yDistance); //Distance between the two boids (always positive or 0).
+                //const float direction = math2d::cartesian_to_polar(xDistance, yDistance).second;
 
                 //Update the currentEntity's velocity if within attraction radius.
                 if (distance <= curBoidComponent->attractRadius)
@@ -168,9 +183,46 @@ namespace System
             curPosition->set_orientation(curPosition->get_orientation()+dTheta);
 
             //Accelerate forward (TODO: should be in self-propelling component?)
-            auto newVelocity = polar_to_cartesian(curBoidComponent->maxVelocity, curPosition->get_orientation());
+            auto newVelocity = math2d::polar_to_cartesian(curBoidComponent->maxVelocity, curPosition->get_orientation());
             curVelocity->set_dx(newVelocity.first);
             curVelocity->set_dy(newVelocity.second);
+        }
+    }
+
+    //Increases velocity of entities in the forward direction.
+    void Navigation::self_propel()
+    {
+        for (Entity currentEntity=0; currentEntity<em->component_list_size(); currentEntity++)
+        {
+            if (em->contains_component<Component::SelfPropelled>(currentEntity))
+            {
+                const auto propeller = em->get_component<Component::SelfPropelled>(currentEntity).lock();
+                const auto position = em->get_component<Component::Position>(currentEntity).lock();
+                auto velocity = em->get_component<Component::Velocity>(currentEntity).lock();
+
+                //If not at maximum self-propelled velocity yet then accelerate forwards.
+                auto unitVector = math2d::polar_to_cartesian(1.0, position->orientation);
+                velocity->dx += unitVector.first * propeller->acceleration;
+                velocity->dy += unitVector.second * propeller->acceleration;
+            }
+        }
+    }
+
+    //Scales down any velocity which exceeds the maximum.
+    void Navigation::clip_to_max_velocity()
+    {
+        for (Entity currentEntity=0; currentEntity<em->component_list_size(); currentEntity++)
+        {
+            auto velocity = em->get_component<Component::Velocity>(currentEntity).lock();
+            if (velocity->maxVelocity >= 0) //Negative values indicate no maximum velocity.
+            {
+                double magnitude = math2d::vector_magnitude(velocity->dx, velocity->dy);
+                if (magnitude > velocity->maxVelocity) //If maximum velocity is being exceeded, scale to maximum velocity (without affecting orientation).
+                {
+                    velocity->dx = velocity->dx*(velocity->maxVelocity/magnitude);
+                    velocity->dy = velocity->dy*(velocity->maxVelocity/magnitude);
+                }
+            }
         }
     }
 }

@@ -6,12 +6,12 @@
 //NOT YET IMPLEMENTED...
 namespace System
 {
-	class CollisionResolver : public System::BaseSystem, public EventHandler<CollisionEvent>
+	class CollisionResolver : public System::BaseSystem, public EventHandler<Event::CollisionEvent>
 	{
 	private:
 	public:
 		void update();
-		void handle_event(const Event &_event) {};
-		void handle_event(const CollisionEvent &_event);
+		void handle_event(const Event::BaseEvent &_event) {};
+		void handle_event(const Event::CollisionEvent &_event);
 	};
 }

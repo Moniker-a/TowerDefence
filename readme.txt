@@ -8,3 +8,4 @@ Areas for improvement:
 
 3) Component xml constructors should substitute default values or throw exceptions if something is missing from xml.
 
+4) Decide whether xml constructors should be passed just the component info they require (may require extra copying)? Or should they have the whole entity specification (allowing checking for dependancies (e.g. if a SelfPropelling component is being constructed in an entity which doesn't have a Position component throw exception?).

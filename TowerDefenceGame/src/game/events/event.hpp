@@ -1,8 +1,11 @@
 #pragma once
 
-//Base class from which all events are derived.
-class Event
+namespace Event
 {
-public:
-private:
-};
+    //Base class from which all events are derived.
+    class BaseEvent
+    {
+    public:
+    private:
+    };
+}
